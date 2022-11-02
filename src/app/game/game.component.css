@@ -1,0 +1,28 @@
+.card {
+    background-color: gray;
+    width: 300px;
+    height: 400px;
+    border-radius: 30px;
+    position: relative;
+}
+
+.caption {
+    background: rgba(1, 1, 1, .6);
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+}
+
+.location {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px;
+    color: white;
+}
+
+.role {
+    font-size: 20px;
+    padding: 5px;
+    color: white;
+}

@@ -1,0 +1,22 @@
+<div fxLayout="column" fxFlexFill fxLayoutAlign="space-evenly center">
+    <div fxFlex="30">
+        <div fxLayout="column" fxFlexFill fxLayoutAlign="end center">
+            <img id="logo" src="assets/icon.png">
+        </div>
+    </div>
+    <div fxFlex="70">
+        <div class="buttons-section" >
+            <div fxLayout="column" fxFlexFill fxLayoutAlign="space-evenly center">
+                <div>
+                    <button mat-raised-button (click)="start()"> Rozpocznij grę </button>
+                </div>
+                <div>
+                    <button mat-raised-button (click)="list()"> Lista lokalizacji </button>
+                </div>
+                <div>
+                    <button mat-raised-button (click)="settings()"> Zarządzaj </button>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>

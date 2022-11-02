@@ -1,0 +1,20 @@
+
+<div mat-dialog-content>
+  <mat-form-field style="width:100%">
+    <mat-label>Nazwa lokalizacji</mat-label>
+    <input matInput [(ngModel)]="location.name" required="true">
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <mat-form-field style="width:100%; margin-top: 10px;">
+    <mat-label>Role (po przecinku)</mat-label>
+    
+    <textarea matInput [(ngModel)]="location.roles" rows="5"></textarea>
+    <!-- <input matInput [(ngModel)]="location.roles"> -->
+  </mat-form-field>
+</div>
+  <div mat-dialog-actions>
+    <div fxLayout="row" fxFlexFill fxLayoutAlign="space-evenly center">
+      <button mat-button (click)="onNoClick()">Wróć</button>
+      <button mat-button [mat-dialog-close]="location" cdkFocusInitial>Zapisz</button>
+    </div>
+  </div>

@@ -1,0 +1,32 @@
+<div class="nav" fxLayout="row" fxLayoutAlign="center center">
+  <div class="back-icon-wrapper" (click)="back()" >
+    <mat-icon class="icon-default"  fontIcon="keyboard_arrow_left"></mat-icon>
+  </div>
+  <div class="nav-title">Ustawienia gry</div>
+</div>
+<div fxLayout="column" fxFlexFill fxLayoutAlign="space-evenly center">
+  <div fxFlex="70">
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+      <div class="start-config" fxLayout="column" fxLayoutAlign="space-evenly center">
+        <div>
+          <mat-form-field>
+            <mat-label>Podaj liczbę osób</mat-label>
+            <input matInput [(ngModel)]="players" placeholder="Liczba osób" required="true">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Podaj liczbę szpiegów</mat-label>
+            <input matInput [(ngModel)]="spies" placeholder="Liczba szpiegów" required="true">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-checkbox [(ngModel)]="useRoles">Graj z rolami</mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="30">
+    <button mat-raised-button (click)="setParameters()"> Dalej </button>
+  </div>
+</div>
