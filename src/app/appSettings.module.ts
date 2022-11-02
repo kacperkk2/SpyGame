@@ -47,6 +47,7 @@ export class AppSettings {
     ]
 
     public static IMAGE_FOR_LOCATION = {
+        'default': 'assets/default.jpg',
         'Samolot': 'assets/samolot.jpg',
         'Bank': 'assets/bank.jpg',
         'Plaża': 'assets/plaza.jpg',

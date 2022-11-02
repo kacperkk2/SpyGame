@@ -68,7 +68,11 @@ export class GameComponent implements OnInit {
       const num = Math.floor(Math.random() * AppSettings.SPY_IMAGES) + 1;
       return AppSettings.IMAGE_FOR_LOCATION[location + num as keyof typeof AppSettings.IMAGE_FOR_LOCATION];
     }
-    return AppSettings.IMAGE_FOR_LOCATION[this.location as keyof typeof AppSettings.IMAGE_FOR_LOCATION];
+    let img = AppSettings.IMAGE_FOR_LOCATION[this.location as keyof typeof AppSettings.IMAGE_FOR_LOCATION];
+    if (img == null) {
+      img = AppSettings.IMAGE_FOR_LOCATION["default" as keyof typeof AppSettings.IMAGE_FOR_LOCATION];
+    }
+    return img;
   }
 }
 
