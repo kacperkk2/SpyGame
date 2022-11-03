@@ -17,22 +17,22 @@
 }
 
 .mat-column-number {
-    width: 25%;
+    width: 20%;
 }
 
-.mat-column-name {
-    width: 45%;
+.mat-column-actions {
+    width: 30%;
 }
 
 p {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .mat-raised-button {
     padding: 3px;
     font-size: 15px;
     height: 50px;
-    max-width: 85px;
+    max-width: 75px;
     margin-left: 5px;
 }
 
