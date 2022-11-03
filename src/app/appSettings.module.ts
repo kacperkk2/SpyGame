@@ -93,5 +93,6 @@ export class AppSettings {
         'Szpieg4': 'assets/spy4.jpg',
     }
     public static SPY_IMAGES = 4;
-    public static CARD_FADEIN_TIME = 400;
+    public static CARD_FADEIN_TIME = 600;
+    public static LOCATIONS_ENDPOINT = "https://spy-game-backend.herokuapp.com/locations";
  }

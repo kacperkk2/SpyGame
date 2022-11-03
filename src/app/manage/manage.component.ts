@@ -4,6 +4,8 @@ import { LocationsManagerService } from '../services/locations-manager/locations
 import {Location} from '../services/locations-manager/locations-manager.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { tap } from 'rxjs/operators';
+
 
 export interface LocationDialog {
   number: number;
@@ -22,7 +24,7 @@ export class ManageComponent implements OnInit {
   dataSource = new MatTableDataSource<Location>([]);
 
   constructor(private _router: Router, private locationsManager: LocationsManagerService, public dialog: MatDialog) { 
-    this.dataSource.data = this.locationsManager.getAllLocations();
+    this.dataSource = new MatTableDataSource(this.locationsManager.locations);
   }
 
   ngOnInit(): void {
@@ -42,9 +44,11 @@ export class ManageComponent implements OnInit {
   }
 
   reset() {
-    if(confirm("Na pewno wczytać domyślne lokalizacje?")) {
-      this.locationsManager.resetLocationsToDefault();
-      this.dataSource.data = this.locationsManager.getAllLocations();
+    if (confirm("Na pewno wczytać domyślne lokalizacje?")) {
+      this.locationsManager.fetchDefaultLocations().subscribe(locations => {
+        this.locationsManager.setLocations(locations);
+        this.dataSource.data = locations;
+      });
     }
   }
 
@@ -55,6 +59,59 @@ export class ManageComponent implements OnInit {
       if (locationNumber != null) {
         this.locationsManager.deleteLocation(locationNumber);
         this.dataSource.data = this.locationsManager.getAllLocations();
+      }
+    });
+  }
+
+  sendLocations() {
+    const dialogRef = this.dialog.open(SaveLocationsNameDialog, {width: '60%', data: null});
+
+    dialogRef.afterClosed().subscribe(name => {
+      if (name != null) {
+        this.locationsManager.sendLocations(name).pipe(
+          tap(
+            {
+              next: (locationsDto) => {
+                this.dialog.open(SaveLocationsDialog, {width: '60%', data: locationsDto.name});
+              },
+              error: (error) => this.showSaveLocationsErrorDialog() // todo
+            }
+          )
+        ).subscribe();
+      }
+    });
+  }
+
+  showSaveLocationsErrorDialog() {
+    const dialogRef = this.dialog.open(ErrorDialog, {width: '60%', data: 'Nie udało się zapisać lokalizacji. Identyfikator już istnieje'});
+  }
+
+  showLoadLocationsErrorDialog() {
+    const dialogRef = this.dialog.open(ErrorDialog, {width: '60%', data: 'Nie udało się wczytać lokalizacji. Błędny identyfikator'});
+  }
+
+  fetchLocations() {
+    const dialogRef = this.dialog.open(LoadLocationsDialog, {width: '90%', data: null});
+
+    dialogRef.afterClosed().subscribe((id: string) => {
+      if (id == "default") {
+        this.locationsManager.fetchDefaultLocations().subscribe(locations => {
+          this.locationsManager.setLocations(locations);
+          this.dataSource.data = locations;
+        });
+      }
+      else if (id != null) {
+        this.locationsManager.fetchLocationsById(id).pipe(
+          tap(
+            {
+              next: (locationsDto) => {
+                this.locationsManager.setLocations(JSON.parse(locationsDto.locations));
+                this.dataSource.data = JSON.parse(locationsDto.locations);
+              },
+              error: (error) => this.showLoadLocationsErrorDialog()
+            }
+          )
+        ).subscribe();
       }
     });
   }
@@ -122,4 +179,64 @@ export class AddDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+@Component({
+  selector: 'save-locations-dialog',
+  templateUrl: 'save-locations-dialog.html',
+})
+export class SaveLocationsDialog {
+  constructor(
+    public dialogRef: MatDialogRef<SaveLocationsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: number
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'load-locations',
+  templateUrl: 'load-locations.html',
+})
+export class LoadLocationsDialog {
+  constructor(
+    public dialogRef: MatDialogRef<LoadLocationsDialog>,
+    @Inject(MAT_DIALOG_DATA) public id: string,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onDefaultClick(): string {
+    return "default";
+  }  
+}
+
+@Component({
+  selector: 'save-locations-name-dialog',
+  templateUrl: 'save-locations-name-dialog.html',
+})
+export class SaveLocationsNameDialog {
+  constructor(
+    public dialogRef: MatDialogRef<SaveLocationsNameDialog>,
+    @Inject(MAT_DIALOG_DATA) public name: string,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'error-dialog',
+  templateUrl: 'error-dialog.html',
+})
+export class ErrorDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ErrorDialog>,
+    @Inject(MAT_DIALOG_DATA) public message: string,
+  ) {}
 }

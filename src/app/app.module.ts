@@ -13,13 +13,14 @@ import {MatButtonModule} from '@angular/material/button';
 import { GameComponent } from './game/game.component';
 import { FormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
-import { ManageComponent, DeleteDialog, AddDialog } from './manage/manage.component';
+import { ManageComponent, DeleteDialog, AddDialog, SaveLocationsDialog, LoadLocationsDialog, ErrorDialog, SaveLocationsNameDialog } from './manage/manage.component';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon'
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,7 +32,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     ListComponent,
     ManageComponent,
     DeleteDialog,
-    AddDialog
+    AddDialog,
+    SaveLocationsDialog,
+    LoadLocationsDialog,
+    ErrorDialog,
+    SaveLocationsNameDialog
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatGridListModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

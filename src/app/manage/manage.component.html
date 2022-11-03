@@ -5,13 +5,21 @@
   <div class="nav-title">Zarządzaj lokalizacjami</div>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button (click)="reset()"> Przywróć domyślne </button>
-    <button mat-raised-button (click)="addLocation()"> Dodaj lokalizację </button>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div class="manage-section">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <p>Lokalizacje: {{dataSource.data.length}}</p>
+        <p>Aktywne: {{countActiveLocations()}}</p>
+      </div>
+      <div>
+        <button mat-raised-button (click)="fetchLocations()"> Wczytaj </button>
+        <button mat-raised-button (click)="sendLocations()"> Zapisz </button>
+        <button mat-raised-button (click)="addLocation()"> Dodaj </button>
+      </div>
+    </div>
+  </div>
 </div>
-
-<p style="text-align: center">Liczba lokalizacji: {{dataSource.data.length}}</p>
-<p style="text-align: center">Aktywne: {{countActiveLocations()}}</p>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z0 locations-table">
     

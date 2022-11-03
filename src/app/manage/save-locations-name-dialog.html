@@ -1,0 +1,14 @@
+
+<div mat-dialog-content>
+  <p style="text-align: center;">Pod jaką nazwą zapisać lokalizacje?<p>
+  <mat-form-field style="width:100%">
+    <mat-label>Identyfikator</mat-label>
+    <input matInput [(ngModel)]="name" required="true">
+  </mat-form-field>
+</div>
+  <div mat-dialog-actions>
+    <div fxLayout="row" fxFlexFill fxLayoutAlign="space-evenly center">
+      <button mat-button (click)="onNoClick()">Wróć</button>
+      <button mat-button [mat-dialog-close]="name" cdkFocusInitial>Zapisz</button>
+    </div>
+  </div>

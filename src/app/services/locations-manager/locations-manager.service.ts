@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AppSettings, LocationBase } from 'src/app/appSettings.module';
+import { LocationsApiService } from './locations-api.service';
+import { lastValueFrom } from 'rxjs';
+import { LocationStrategy } from '@angular/common';
 
 export class Location {
   number: number;
@@ -20,32 +23,43 @@ export class Location {
 })
 export class LocationsManagerService {
   locations: Location[] = [];
-  storageKey: string = "locations";
+  storageLocationsKey: string = "locations";
 
-  constructor() {
-    this.locations = this.initLocations();
+  constructor(private locationAPI: LocationsApiService) {
     if (this.isStorageEmpty()) {
-      this.store();
+      this.fetchDefaultLocations().subscribe(locations => {
+          this.locations = locations;
+          this.store();
+        });
     }
-    this.locations = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
+    else {
+      this.locations = JSON.parse(localStorage.getItem(this.storageLocationsKey) || '{}');
+    }
   }
 
-  initLocations() {
-    const locationsBase = Object.assign([], AppSettings.LOCATIONS_AND_ROLES);
-    return locationsBase.map((locationBase, index) => new Location(locationBase, index, true));
+  public setLocations(locations: Location[]) {
+    this.locations = locations;
+    this.store();
+  }
+
+  public sendLocations(name: string) {
+    return this.locationAPI.sendLocations(this.locations, name);
+  }
+
+  public fetchDefaultLocations() {
+    return this.locationAPI.getDefaultLocations();
+  }
+
+  public fetchLocationsById(id: string) {
+    return this.locationAPI.getLocationsById(id);
   }
 
   public isStorageEmpty() {
-    return localStorage.getItem(this.storageKey) == null;
+    return localStorage.getItem(this.storageLocationsKey) == null;
   }
 
   public store() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.locations));
-  }
-
-  public resetLocationsToDefault() {
-    this.locations = this.initLocations();
-    this.store();
+    localStorage.setItem(this.storageLocationsKey, JSON.stringify(this.locations));
   }
 
   public deleteLocation(locationNumber: number) {
