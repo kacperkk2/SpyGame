@@ -3,12 +3,12 @@
   <p style="text-align: center;">Identyfikator lokalizacji do pobrania:</p>
   <mat-form-field fxLayout="row" fxLayoutAlign="center center">
     <mat-label>id</mat-label>
-    <input matInput [(ngModel)]="id" required="true">
+    <input matInput [(ngModel)]="id" required="true" autocomplete="off">
   </mat-form-field>
 </div>
   <div mat-dialog-actions>
     <div fxLayout="row" fxFlexFill fxLayoutAlign="space-evenly center">
-      <button mat-stroked-button [mat-dialog-close]="onDefaultClick()">Wczytaj domyślne</button>
+      <button mat-stroked-button [mat-dialog-close]="onDefaultClick()">Domyślne</button>
       <button mat-button (click)="onNoClick()">Wróć</button>
       <button mat-button [mat-dialog-close]="id" cdkFocusInitial>Pobierz</button>
     </div>

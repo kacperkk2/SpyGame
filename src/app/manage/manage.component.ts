@@ -90,6 +90,10 @@ export class ManageComponent implements OnInit {
     const dialogRef = this.dialog.open(ErrorDialog, {width: '60%', data: 'Nie udało się wczytać lokalizacji. Błędny identyfikator'});
   }
 
+  showAddLocationsMessageDialog(locationName: string) {
+    const dialogRef = this.dialog.open(ErrorDialog, {width: '60%', data: 'Dodano lokalizację ' + locationName});
+  }
+
   fetchLocations() {
     const dialogRef = this.dialog.open(LoadLocationsDialog, {width: '90%', data: null});
 
@@ -127,6 +131,7 @@ export class ManageComponent implements OnInit {
         }
         this.locationsManager.addLocation({name: location.name, roles: roles});
         this.dataSource.data = this.locationsManager.getAllLocations();
+        this.showAddLocationsMessageDialog(location.name);
       }
     });
   }
