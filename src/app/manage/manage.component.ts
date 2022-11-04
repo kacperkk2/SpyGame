@@ -4,6 +4,7 @@ import { LocationsManagerService } from '../services/locations-manager/locations
 import {Location} from '../services/locations-manager/locations-manager.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { LocationsApiService, LocationDto } from '../services/locations-manager/locations-api.service';
 import { tap } from 'rxjs/operators';
 
 
@@ -95,7 +96,7 @@ export class ManageComponent implements OnInit {
   }
 
   fetchLocations() {
-    const dialogRef = this.dialog.open(LoadLocationsDialog, {width: '90%', data: null});
+    const dialogRef = this.dialog.open(LoadLocationsDialog, {width: '90%'});
 
     dialogRef.afterClosed().subscribe((id: string) => {
       if (id == "default") {
@@ -206,19 +207,37 @@ export class SaveLocationsDialog {
   templateUrl: 'load-locations.html',
 })
 export class LoadLocationsDialog {
+  displayedColumns: string[] = ['name'];
+  dataSource = new MatTableDataSource<LocationDto>();
+
   constructor(
     public dialogRef: MatDialogRef<LoadLocationsDialog>,
-    @Inject(MAT_DIALOG_DATA) public id: string,
-  ) {}
+    private _router: Router, 
+    private locationAPI: LocationsApiService, 
+    public dialog: MatDialog) { 
+    
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  onDefaultClick(): string {
-    return "default";
-  }  
+  ngOnInit(): void {
+    // this.locationAPI.getAllSaves().subscribe(saves => {
+    //   this.dataSource = new MatTableDataSource(saves);
+    // });
+    this.dataSource = new MatTableDataSource([{name: "default", locations: ""},{name: "drugie", locations: ""}]);
+  }
+
+  back() {
+    this._router.navigate([""]);
+  }
+
+  rowClicked(save: LocationDto) {
+    this.dialogRef.close(save.name);
+  }
 }
+
 
 @Component({
   selector: 'save-locations-name-dialog',

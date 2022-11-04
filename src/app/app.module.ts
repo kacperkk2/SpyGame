@@ -21,6 +21,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     SaveLocationsDialog,
     LoadLocationsDialog,
     ErrorDialog,
-    SaveLocationsNameDialog
+    SaveLocationsNameDialog,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

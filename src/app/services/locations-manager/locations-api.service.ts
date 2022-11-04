@@ -10,7 +10,7 @@ interface Location {
   isActive: boolean;
 }
 
-interface LocationDto {
+export interface LocationDto {
   locations: string;
   name: string;
 }
@@ -42,7 +42,11 @@ export class LocationsApiService {
       });
   }
 
-  getPosts() {
-    console.log(this.posts);
+  getAllSaves() {
+    return this.httpClient.get<LocationDto[]>(this.URL);
+  }
+
+  deleteSave(name: string) {
+    return this.httpClient.delete(this.URL + "/" + name);
   }
 }

@@ -1,15 +1,17 @@
-
 <div mat-dialog-content>
-  <p style="text-align: center;">Identyfikator lokalizacji do pobrania:</p>
-  <mat-form-field fxLayout="row" fxLayoutAlign="center center">
-    <mat-label>id</mat-label>
-    <input matInput [(ngModel)]="id" required="true" autocomplete="off">
-  </mat-form-field>
+  <p style="text-align: center;">Który zapisz chcesz pobrać?</p>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" style="width: 100%;">
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nazwa zapisu</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <tr mat-row (click)="rowClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
-  <div mat-dialog-actions>
-    <div fxLayout="row" fxFlexFill fxLayoutAlign="space-evenly center">
-      <button mat-stroked-button [mat-dialog-close]="onDefaultClick()">Domyślne</button>
-      <button mat-button (click)="onNoClick()">Wróć</button>
-      <button mat-button [mat-dialog-close]="id" cdkFocusInitial>Pobierz</button>
-    </div>
+<div mat-dialog-actions>
+  <div fxLayout="row" fxFlexFill fxLayoutAlign="space-evenly center">
+    <button mat-button (click)="onNoClick()">Wróć</button>
   </div>
+</div>

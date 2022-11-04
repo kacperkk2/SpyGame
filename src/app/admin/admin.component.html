@@ -1,0 +1,24 @@
+<div class="nav" fxLayout="row" fxLayoutAlign="center center">
+<div class="back-icon-wrapper" (click)="back()" >
+    <mat-icon class="icon-default"  fontIcon="keyboard_arrow_left"></mat-icon>
+</div>
+<div class="nav-title">Admin</div>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z0 locations-table">
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nazwa zapisu</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Akcja</th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon class="manage-icons" (click)="deleteSave(element)" fontIcon="clear"></mat-icon>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

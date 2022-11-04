@@ -5,13 +5,15 @@ import { ListComponent } from './list/list.component';
 import { MainComponent } from './main/main.component';
 import { ManageComponent } from './manage/manage.component';
 import { StartComponent } from './start/start.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'start', component: StartComponent },
   { path: 'game', component: GameComponent },
   { path: 'list', component: ListComponent },
-  { path: 'manage', component: ManageComponent }
+  { path: 'manage', component: ManageComponent },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({
