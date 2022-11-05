@@ -5,7 +5,7 @@
   <div class="nav-title">Lista lokalizacji</div>
 </div>
 <div fxLayout="column" fxLayoutAlign="start center">
-  <mat-grid-list cols="2" rowHeight="5:1">
+  <mat-grid-list class="list" cols="2" rowHeight="5:1">
     <mat-grid-tile *ngFor="let location of locations" 
       [style.background]="location.backgroundColor"
       [style.color]="location.color"
@@ -13,4 +13,6 @@
       {{location.name}}
     </mat-grid-tile>
   </mat-grid-list>
+
+  <textarea matInput rows="15" class="list" style="font-size: 16px;"></textarea>
 </div>
