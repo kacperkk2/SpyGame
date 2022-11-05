@@ -68,13 +68,14 @@ export class ManageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(name => {
       if (name != null) {
+        name = name.trim();
         this.locationsManager.sendLocations(name).pipe(
           tap(
             {
               next: (locationsDto) => {
                 this.dialog.open(SaveLocationsDialog, {width: '60%', data: locationsDto.name});
               },
-              error: (error) => this.showSaveLocationsErrorDialog() // todo
+              error: (error) => this.showSaveLocationsErrorDialog()
             }
           )
         ).subscribe();
