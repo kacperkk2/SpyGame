@@ -10,7 +10,7 @@ interface Location {
   isActive: boolean;
 }
 
-interface LocationDto {
+export interface LocationDto {
   locations: string;
   name: string;
 }
@@ -21,7 +21,6 @@ interface LocationDto {
 export class LocationsApiService {
 
   readonly URL = AppSettings.LOCATIONS_ENDPOINT;
-  posts: any;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -34,15 +33,19 @@ export class LocationsApiService {
     return this.httpClient.get<Location[]>(this.URL + "/default");
   }
 
+  getAllSaves() {
+    return this.httpClient.get<LocationDto[]>(this.URL);
+  }
+
+  deleteSave(name: string) {
+    return this.httpClient.delete(this.URL + "/" + name);
+  }
+
   sendLocations(locations: Location[], name: string) {
     return this.httpClient.post<LocationDto>(this.URL, 
       {
         locations: JSON.stringify(locations), 
         name: name
       });
-  }
-
-  getPosts() {
-    console.log(this.posts);
   }
 }
