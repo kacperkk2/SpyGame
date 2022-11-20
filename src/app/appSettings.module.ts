@@ -94,5 +94,5 @@ export class AppSettings {
     }
     public static SPY_IMAGES = 4;
     public static CARD_FADEIN_TIME = 600;
-    public static LOCATIONS_ENDPOINT = "https://spy-game-backend.herokuapp.com/locations";
+    public static LOCATIONS_ENDPOINT = "https://spygame-backend-production.up.railway.app/locations";
  }
